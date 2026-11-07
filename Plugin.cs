@@ -12,7 +12,7 @@ namespace SkeletonChoice
     {
         public const string PluginGuid = "Slikfoul.SkeletonChoice";
         public const string PluginName = "Summon Choise";
-        public const string PluginVersion = "0.4.0";
+        public const string PluginVersion = "1.0.0";
         internal static Plugin Instance;
         internal ManualLogSource Log { get { return Logger; } }
         private Harmony harmony;

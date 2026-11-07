@@ -1,6 +1,6 @@
 {
   "name": "SkeletonChoice",
-  "version_number": "0.4.0",
+  "version_number": "1.0.0",
   "website_url": "https://github.com/slikfoul/SummonChoise",
   "description": "Choose Dead Raiser skeletons and Spirit Caller spirits in Configuration Manager. Fill spirit slots in rounds, adjust spirit following distance, and see active summon counters.",
   "dependencies": [

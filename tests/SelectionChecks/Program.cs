@@ -235,7 +235,7 @@ internal static class Program
         {
             var reader = pe.GetMetadataReader();
             Check(!reader.TypeReferences.Any(h => reader.GetString(reader.GetTypeReference(h).Name).StartsWith("ValueTuple")), "Valheim plugin depends on ValueTuple.");
-            Check(reader.GetAssemblyDefinition().Version == new Version(0, 4, 0, 0), "Wrong assembly version.");
+            Check(reader.GetAssemblyDefinition().Version == new Version(1, 0, 0, 0), "Wrong assembly version.");
             var effect = reader.TypeDefinitions.Select(h => reader.GetTypeDefinition(h)).Single(t => reader.GetString(t.Name) == "SummonedSkeletonsEffect");
             Check(effect.GetMethods().Any(h => reader.GetString(reader.GetMethodDefinition(h).Name) == "GetIconText"), "Counter effect does not supply native icon text.");
         }

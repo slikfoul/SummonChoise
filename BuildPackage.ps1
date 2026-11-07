@@ -19,7 +19,9 @@ $plugin = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'Plugin.cs') -Raw
 if ($plugin -notmatch ('public const string PluginVersion = "' + [regex]::Escape($version) + '";')) { throw 'Plugin and manifest versions differ.' }
 $project = [xml](Get-Content -LiteralPath (Join-Path $PSScriptRoot 'SkeletonChoice.csproj') -Raw)
 if ($project.Project.PropertyGroup.Version -cne $version) { throw 'Project and manifest versions differ.' }
-$changelog = Get-Content -LiteralPath (Join-Path $packaging 'CHANGELOG.md') -Raw
+$changelogName = if ([version]$version -ge [version]'1.0.0') { 'CHANGELOG.release.md' } else { 'CHANGELOG.md' }
+$changelogPath = Join-Path $packaging $changelogName
+$changelog = Get-Content -LiteralPath $changelogPath -Raw
 $headings = @([regex]::Matches($changelog, '(?m)^## (\d+\.\d+\.\d+)\r?$'))
 if (!$headings.Count -or $headings[0].Groups[1].Value -cne $version) { throw 'Changelog and manifest versions differ.' }
 if ([version]$version -ge [version]'1.0.0' -and $changelog -match '(?m)^## 0\.') { throw 'Development entries must not be in the public changelog.' }
@@ -42,7 +44,7 @@ $temporary = Join-Path $artifacts ('package-' + [guid]::NewGuid().ToString('N') 
 $sources = [ordered]@{
     'manifest.json' = Join-Path $packaging 'manifest.json'
     'README.md' = Join-Path $packaging 'README.md'
-    'CHANGELOG.md' = Join-Path $packaging 'CHANGELOG.md'
+    'CHANGELOG.md' = $changelogPath
     'icon.png' = $icon
     'LICENSE' = Join-Path $PSScriptRoot 'LICENSE'
     'BepInEx/plugins/SkeletonChoice/SkeletonChoice.dll' = $dll

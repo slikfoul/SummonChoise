@@ -1,0 +1,6 @@
+bin/
+obj/
+artifacts/
+backups/
+tests/bin/
+tests/obj/
